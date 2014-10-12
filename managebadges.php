@@ -95,7 +95,7 @@ foreach($badges as $badge) {
     $table->add_data(array($badge->id, $badge_image_stub, $viewlink, $badge->short_description, $actions_stub));
 }
 
-$url = $CFG->wwwroot . '/blocks/credly/editbadge.php' . substr($extraparams, 1);
+$url = $CFG->wwwroot . '/blocks/credly/editbadge.php?' . substr($extraparams, 1);
 echo html_writer::div($OUTPUT->single_button($url, get_string('addnewbadge', 'block_credly'), 'get'), 'actionbuttons');
 
 $table->print_html();
