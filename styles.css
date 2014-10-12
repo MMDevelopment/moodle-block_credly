@@ -1,0 +1,28 @@
+/* RSS Feeds
+-------------------------*/
+.block_credly img.credly_badge {
+    max-width:72px;
+    margin:0 15px 10px 0;
+}
+#credlybadges {
+    margin-bottom:10px;
+}
+#credlybadges .id {
+    width: 60px;
+}
+#credlybadges .badgethumbnail {
+    width: 80px;
+}
+#credlybadges .actions {
+    width: 60px;
+    text-align:center;
+}
+.block_credly_errorbox {
+    padding:20px;
+    background-color:#ff5050;
+    color:#ffffff;
+    margin-bottom:10px;
+}
+#grantselect_wrapper #userselector_options {
+    display:none;
+}
