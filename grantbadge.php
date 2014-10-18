@@ -1,4 +1,18 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Script that grants a credly badge to a user
@@ -70,8 +84,8 @@ if ($grant && confirm_sesskey()) {
             $errormsgs[] = get_string('grantbadgerequired', 'block_credly');
         }
         if (count($errormsgs) == 0) {
-            $grant_result = block_credly_grant_badge($grantselect, $id);
-            if (empty($grant_result)) {
+            $grantresult = block_credly_grant_badge($grantselect, $id);
+            if (empty($grantresult)) {
                 $errormsgs[] = get_string('granterror', 'block_credly');
             } else {
                 if ($courseid) {
@@ -95,11 +109,11 @@ if (!empty($errormsg)) {
 }
 
 echo html_writer::start_tag('form', array('action' => 'grantbadge.php', 'method' => 'post'));
-echo html_writer::empty_tag('input', array('type'=>'hidden', 'name'=>'courseid', 'value'=>$courseid));
-echo html_writer::empty_tag('input', array('type'=>'hidden', 'name'=>'sesskey', 'value'=>sesskey()));
-echo html_writer::empty_tag('input', array('type'=>'hidden', 'name'=>'grant', 'value'=>1));
+echo html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'courseid', 'value' => $courseid));
+echo html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'sesskey', 'value' => sesskey()));
+echo html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'grant', 'value' => 1));
 
-$options = array('courseid' => $courseid, 'accesscontext' => $context, 'searchanywhere' => TRUE, 'multiselect' => FALSE);
+$options = array('courseid' => $courseid, 'accesscontext' => $context, 'searchanywhere' => true, 'multiselect' => false);
 $potentialuserselector = new block_credly_potential_grantee('grantselect', $options);
 $potentialuserselector->set_rows(10);
 $potentialuserselector->display();
@@ -116,8 +130,10 @@ echo html_writer::select($badgeselectoptions, 'id', $id);
 echo html_writer::end_tag('div');
 
 echo html_writer::start_tag('div');
-echo html_writer::empty_tag('input', array('type'=>'submit', 'name'=>'submitbutton', 'value'=>get_string('issuebadge','block_credly'), 'id'=>'id_submitbutton'));
-echo html_writer::empty_tag('input', array('type'=>'submit', 'name'=>'cancel', 'value'=>get_string('cancel'), 'id'=>'id_cancel', 'class'=>'btn-cancel'));
+echo html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'submitbutton',
+        'value' => get_string('issuebadge', 'block_credly'), 'id' => 'id_submitbutton'));
+echo html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'cancel',
+        'value' => get_string('cancel'), 'id' => 'id_cancel', 'class' => 'btn-cancel'));
 echo html_writer::end_tag('div');
 
 echo html_writer::end_tag('form');

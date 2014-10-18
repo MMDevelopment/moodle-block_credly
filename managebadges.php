@@ -1,4 +1,18 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Script that lists created Credly badges
@@ -81,18 +95,18 @@ $table->column_class('actions', 'actions');
 
 $table->setup();
 
-foreach($badges as $badge) {
+foreach ($badges as $badge) {
 
-    $badge_image_src = str_replace('.png', '_5.png', $badge->image_url);
-    $badge_image_stub = html_writer::img($badge_image_src, $badge->title, array('title'=>$badge->title));
+    $badgeimagesrc = str_replace('.png', '_5.png', $badge->image_url);
+    $badgeimagestub = html_writer::img($badgeimagesrc, $badge->title, array('title' => $badge->title));
 
     $viewlink = html_writer::link($CFG->wwwroot . '/blocks/credly/viewbadge.php?id=' . $badge->id . $extraparams, $badge->title);
 
     $editurl = new moodle_url('/blocks/credly/editbadge.php?id=' . $badge->id . $extraparams);
     $editaction = $OUTPUT->action_icon($editurl, new pix_icon('t/edit', get_string('edit')));
-    $actions_stub = $editaction;
+    $actionsstub = $editaction;
 
-    $table->add_data(array($badge->id, $badge_image_stub, $viewlink, $badge->short_description, $actions_stub));
+    $table->add_data(array($badge->id, $badgeimagestub, $viewlink, $badge->short_description, $actionsstub));
 }
 
 $url = $CFG->wwwroot . '/blocks/credly/editbadge.php?' . substr($extraparams, 1);

@@ -1,4 +1,18 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Script that creates/upload a badge via Credly Open Credit API
@@ -45,9 +59,9 @@ $PAGE->set_pagelayout('admin');
 if ($id) {
     $isadding = false;
     $badgerecord = block_credly_get_badge_info($id);
-    $badge_image_preview_src = str_replace('.png', '_7.png', $badgerecord->image_url);
-    $imagepreview = html_writer::img($badge_image_preview_src, $badgerecord->title, array('title'=>$badgerecord->title));
-    $customdata = array('imagepreview'=>$imagepreview);
+    $badgeimagepreviewsrc = str_replace('.png', '_7.png', $badgerecord->image_url);
+    $imagepreview = html_writer::img($badgeimagepreviewsrc, $badgerecord->title, array('title' => $badgerecord->title));
+    $customdata = array('imagepreview' => $imagepreview);
 } else {
     $isadding = true;
     $badgerecord = new stdClass;
@@ -62,11 +76,11 @@ if ($mform->is_cancelled()) {
 
 } else if ($data = $mform->get_data() and confirm_sesskey()) {
     if ($isadding) {
-        $image_data = $mform->get_file_content('badgeimage');
-        $badgeid = block_credly_create_badge($data, $image_data);
+        $imagedata = $mform->get_file_content('badgeimage');
+        $badgeid = block_credly_create_badge($data, $imagedata);
     } else {
-        $image_data = $mform->get_file_content('badgeimage');
-        $badgeid = block_credly_update_badge($id, $data, $image_data);
+        $imagedata = $mform->get_file_content('badgeimage');
+        $badgeid = block_credly_update_badge($id, $data, $imagedata);
     }
 
     redirect($managebadges);
