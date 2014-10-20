@@ -95,25 +95,29 @@ $table->column_class('actions', 'actions');
 
 $table->setup();
 
-foreach ($badges as $badge) {
+$addurl = $CFG->wwwroot . '/blocks/credly/editbadge.php?' . substr($extraparams, 1);
 
-    $badgeimagesrc = str_replace('.png', '_5.png', $badge->image_url);
-    $badgeimagestub = html_writer::img($badgeimagesrc, $badge->title, array('title' => $badge->title));
+if ($badges) {
+    foreach ($badges as $badge) {
 
-    $viewlink = html_writer::link($CFG->wwwroot . '/blocks/credly/viewbadge.php?id=' . $badge->id . $extraparams, $badge->title);
+        $badgeimagesrc = str_replace('.png', '_5.png', $badge->image_url);
+        $badgeimagestub = html_writer::img($badgeimagesrc, $badge->title, array('title' => $badge->title));
 
-    $editurl = new moodle_url('/blocks/credly/editbadge.php?id=' . $badge->id . $extraparams);
-    $editaction = $OUTPUT->action_icon($editurl, new pix_icon('t/edit', get_string('edit')));
-    $actionsstub = $editaction;
+        $viewlink = html_writer::link($CFG->wwwroot . '/blocks/credly/viewbadge.php?id=' . $badge->id . $extraparams, $badge->title);
 
-    $table->add_data(array($badge->id, $badgeimagestub, $viewlink, $badge->short_description, $actionsstub));
+        $editurl = new moodle_url('/blocks/credly/editbadge.php?id=' . $badge->id . $extraparams);
+        $editaction = $OUTPUT->action_icon($editurl, new pix_icon('t/edit', get_string('edit')));
+        $actionsstub = $editaction;
+
+        $table->add_data(array($badge->id, $badgeimagestub, $viewlink, $badge->short_description, $actionsstub));
+    }
+
+    echo html_writer::div($OUTPUT->single_button($addurl, get_string('addnewbadge', 'block_credly'), 'get'), 'actionbuttons');
+
 }
-
-$url = $CFG->wwwroot . '/blocks/credly/editbadge.php?' . substr($extraparams, 1);
-echo html_writer::div($OUTPUT->single_button($url, get_string('addnewbadge', 'block_credly'), 'get'), 'actionbuttons');
 
 $table->print_html();
 
-echo html_writer::div($OUTPUT->single_button($url, get_string('addnewbadge', 'block_credly'), 'get'), 'actionbuttons');
+echo html_writer::div($OUTPUT->single_button($addurl, get_string('addnewbadge', 'block_credly'), 'get'), 'actionbuttons');
 
 echo $OUTPUT->footer();
