@@ -72,14 +72,14 @@ $PAGE->navbar->add($strviewbadge);
 echo $OUTPUT->header();
 
 $badgeinfo = block_credly_get_badge_info($id);
-if ($course) {
+if ($courseid) {
     if (has_capability('block/credly:managebadge', $context)) {
         $continueurl = new moodle_url('/blocks/credly/managebadges.php', array('courseid' => $courseid));
     } else {
         $continueurl = new moodle_url('/course/view.php', array('id' => $courseid));
     }
 } else {
-    $continueurl = new moodle_url('/blocks/credly/managebadges.php', array('courseid' => $courseid));
+    $continueurl = new moodle_url('/blocks/credly/managebadges.php');
 }
 if (empty($badgeinfo)) {
     echo $OUTPUT->box_start('generalbox boxaligncenter');
