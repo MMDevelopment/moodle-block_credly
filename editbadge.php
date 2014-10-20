@@ -59,6 +59,9 @@ $PAGE->set_pagelayout('admin');
 if ($id) {
     $isadding = false;
     $badgerecord = block_credly_get_badge_info($id);
+    if (!$badgerecord) {
+        print_error('fetcherror', 'block_credly');
+    }
     $badgeimagepreviewsrc = str_replace('.png', '_7.png', $badgerecord->image_url);
     $imagepreview = html_writer::img($badgeimagepreviewsrc, $badgerecord->title, array('title' => $badgerecord->title));
     $customdata = array('imagepreview' => $imagepreview);
