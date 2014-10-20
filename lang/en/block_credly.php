@@ -48,6 +48,7 @@ $string['errorexpiresin'] = 'Expires value should be an integer value from 0 to 
 $string['errorfetchingbadgeinfo'] = 'The system encountered an error trying to fetch the badge info from Credly.';
 $string['expires_in'] = 'Expires after how many seconds';
 $string['expires_in_help'] = 'Number of seconds until the badge expires from the moment it is issued.  A value of 0 means never.';
+$string['fetcherror'] = 'The system encountered an error trying to retrieve the badge information.';
 $string['grantbadge'] = 'Grant a badge';
 $string['grantedtouser'] = 'The badge was issued and the user as notified.  The user may still need to accept the badge depending on the user&apos;s Credly account settings.';
 $string['granterror'] = 'The system encountered an error trying to grant the badge.';
