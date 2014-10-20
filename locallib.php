@@ -78,17 +78,21 @@ class block_credly_badge_edit_form extends moodleform {
         $mform->addHelpButton('badgeimage', 'badgeimage', 'block_credly');
 
         $mform->addElement('text', 'title', get_string('title', 'block_credly'), 'maxlength="128" size="80"');
+        $mform->setType('title', PARAM_RAW);
         $mform->addRule('title', get_string('missingtitle', 'block_credly'), 'required', null, 'client');
         $mform->addHelpButton('title', 'title', 'block_credly');
 
         $mform->addElement('text', 'short_description', get_string('short_description', 'block_credly'),
                 'maxlength="128" size="80"');
+        $mform->setType('short_description', PARAM_RAW);
         $mform->addHelpButton('short_description', 'short_description', 'block_credly');
 
         $mform->addElement('text', 'description', get_string('description', 'block_credly'), 'maxlength="500" size="80"');
+        $mform->setType('description', PARAM_RAW);
         $mform->addHelpButton('description', 'description', 'block_credly');
 
         $mform->addElement('text', 'criteria', get_string('criteria', 'block_credly'), 'maxlength="500" size="80"');
+        $mform->setType('criteria', PARAM_RAW);
         $mform->addHelpButton('criteria', 'criteria', 'block_credly');
 
         $mform->addElement('selectyesno', 'is_giveable', get_string('is_giveable', 'block_credly'));
@@ -96,6 +100,7 @@ class block_credly_badge_edit_form extends moodleform {
         $mform->setDefault('is_giveable', 0);
 
         $mform->addElement('text', 'expires_in', get_string('expires_in', 'block_credly'), 'maxlength="10" size="11"');
+        $mform->setType('expires_in', PARAM_INT);
         $mform->addRule('expires_in', get_string('errorexpiresin', 'block_credly', $this->_maxexpiresin),
                 'numeric', null, 'client');
         $mform->setDefault('expires_in', 0);
