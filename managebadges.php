@@ -103,7 +103,10 @@ if ($badges) {
         $badgeimagesrc = str_replace('.png', '_5.png', $badge->image_url);
         $badgeimagestub = html_writer::img($badgeimagesrc, $badge->title, array('title' => $badge->title));
 
-        $viewlink = html_writer::link($CFG->wwwroot . '/blocks/credly/viewbadge.php?id=' . $badge->id . $extraparams, $badge->title);
+        $viewlink = html_writer::link(
+            $CFG->wwwroot . '/blocks/credly/viewbadge.php?id=' . $badge->id . $extraparams,
+            $badge->title
+        );
 
         $editurl = new moodle_url('/blocks/credly/editbadge.php?id=' . $badge->id . $extraparams);
         $editaction = $OUTPUT->action_icon($editurl, new pix_icon('t/edit', get_string('edit')));

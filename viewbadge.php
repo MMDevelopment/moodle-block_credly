@@ -106,7 +106,9 @@ if (empty($badgeinfo)) {
         $isgiveable = ($badgeinfo->is_giveable == 1) ? get_string('yes') : get_string('no');
         $rowsdata[] = array(get_string('is_giveable', 'block_credly'), $isgiveable);
         $rowsdata[] = array(get_string('created_at', 'block_credly'), $badgeinfo->created_at);
-        // $rowsdata[] = array(get_string('is_claimable', 'block_credly'), $badgeinfo->is_claimable);
+        /*
+        $rowsdata[] = array(get_string('is_claimable', 'block_credly'), $badgeinfo->is_claimable);
+        */
         $expiresin = ($badgeinfo->expires_in != 0) ? $badgeinfo->expires_in : get_string('never');
         $rowsdata[] = array(get_string('expires_in', 'block_credly'), $expiresin);
     }
