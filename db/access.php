@@ -18,7 +18,7 @@
  * Credly block capabilities
  *
  * @package    block_credly
- * @copyright  2014 Deds Castillo, MM Development Services (http://mmmoodle.com)
+ * @copyright  2014-2017 Deds Castillo, MM Development Services (http://michaelmino.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

@@ -18,7 +18,7 @@
  * Helper forms for integrating with Credly Open Credit API
  *
  * @package    block_credly
- * @copyright  2014 Deds Castillo, MM Development Services (http://mmmoodle.com)
+ * @copyright  2014-2017 Deds Castillo, MM Development Services (http://michaelmino.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,7 +32,7 @@ require_once($CFG->dirroot . '/user/selector/lib.php');
  * Form for adding or editing badges.
  *
  * @package    block_credly
- * @copyright  2014 Deds Castillo, MM Development Services (http://mmmoodle.com)
+ * @copyright  2014-2017 Deds Castillo, MM Development Services (http://michaelmino.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_credly_badge_edit_form extends moodleform {
@@ -137,7 +137,7 @@ class block_credly_badge_edit_form extends moodleform {
  * A user selector widget for fetching potential grantees of a badge
  *
  * @package    block_credly
- * @copyright  2014 Deds Castillo, MM Development Services (http://mmmoodle.com)
+ * @copyright  2014-2017 Deds Castillo, MM Development Services (http://michaelmino.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_credly_potential_grantee extends user_selector_base {

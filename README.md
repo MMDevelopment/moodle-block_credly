@@ -26,7 +26,7 @@ REQUIREMENTS
 AUTHOR
 ----------
 This block was developed by Deds Castillo for
-  MM Development Services ([http://mmmoodle.com](http://mmmoodle.com)),
+  MM Development Services ([http://michaelmino.com](http://michaelmino.com)),
   in cooperation with the gracious folks at Credly ([https://credly.com](https://credly.com))
 
 

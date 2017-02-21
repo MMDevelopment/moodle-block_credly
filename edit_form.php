@@ -18,20 +18,19 @@
  * Form for editing credly block instances
  *
  * @package    block_credly
- * @copyright  2014 Deds Castillo, MM Development Services (http://mmmoodle.com)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-/**
- * Form to customize block parameters.
- *
- * @package    block_credly
- * @copyright  2014 Deds Castillo, MM Development Services (http://mmmoodle.com)
+ * @copyright  2014-2017 Deds Castillo, MM Development Services (http://michaelmino.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Form to customize block parameters.
+ *
+ * @package    block_credly
+ * @copyright  2014-2017 Deds Castillo, MM Development Services (http://michaelmino.com)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class block_credly_edit_form extends block_edit_form {
 
     /**
