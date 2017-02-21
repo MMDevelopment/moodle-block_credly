@@ -26,3 +26,10 @@
 #grantselect_wrapper #userselector_options {
     display:none;
 }
+.credly_badge_title {
+    font-weight:bold;
+}
+.credlylatest {
+    text-align:center;
+    margin-bottom:10px;
+}

@@ -24,9 +24,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2014102000;       // The current module version (Date: YYYYMMDDXX).
+$plugin->version   = 2017022000;       // The current module version (Date: YYYYMMDDXX).
 $plugin->requires  = 2014050800;       // Requires this Moodle version.
-$plugin->release   = '2.7.2 (Build: 2014102000)';
+$plugin->release   = '2.7.4 (Build: 2017022000)';
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->component = 'block_credly';   // Full name of the plugin (used for diagnostics).
 $plugin->cron      = 300;

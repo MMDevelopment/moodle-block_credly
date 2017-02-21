@@ -120,6 +120,13 @@ class block_credly extends block_base {
         if ($maxentries > count($badges)) {
             $maxentries = count($badges);
         }
+
+        if (count($badges)) {
+            $this->content->text .= html_writer::start_div('credlylatest');
+            $this->content->text .= get_string('showinglatest', 'block_credly', $maxentries);
+            $this->content->text .= html_writer::end_div();
+        }
+
         for ($x = 0; $x < $maxentries; $x++) {
             $badge = $badges[$x];
             // Use the thumbnail.
@@ -128,6 +135,13 @@ class block_credly extends block_base {
                     array('title' => $badge->title, 'class' => 'credly_badge credly_badge_id_'.$badge->id));
             $badgelink = html_writer::link('https://credly.com/credit/'.$badge->id, $badgeimagestub, array('target' => '_blank'));
             $this->content->text .= $badgelink;
+        }
+
+        if (count($badges)) {
+            $this->content->text .= html_writer::start_div();
+            $this->content->text .= html_writer::link($CFG->wwwroot . '/blocks/credly/mybadges.php?courseid='.$this->page->course->id,
+        get_string('viewallmy', 'block_credly'));
+            $this->content->text .= html_writer::end_div();
         }
 
         $footeritems = array();
