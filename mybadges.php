@@ -74,7 +74,7 @@ echo $OUTPUT->heading($strmy, 2);
 $table = new flexible_table('credly-display-badges');
 
 $table->define_columns(array('thumbnail', 'info'));
-$table->define_headers(array('',''));
+$table->define_headers(array('', ''));
 $table->define_baseurl($baseurl);
 
 $table->set_attribute('cellspacing', '0');
@@ -91,8 +91,12 @@ if ($badges) {
         $badgeimagesrc = str_replace('.png', '_5.png', $badge->image);
         $badgeimagestub = html_writer::img($badgeimagesrc, $badge->title, array('title' => $badge->title));
 
-        $badgelink = html_writer::link('https://credly.com/credit/'.$badge->id, get_string('viewincredly', 'block_credly'), array('target' => '_blank'));
-        $badgeinfo = html_writer::tag('span', $badge->title, array('class'=>'credly_badge_title'));
+        $badgelink = html_writer::link(
+            'https://credly.com/credit/'.$badge->id,
+            get_string('viewincredly', 'block_credly'),
+            array('target' => '_blank')
+        );
+        $badgeinfo = html_writer::tag('span', $badge->title, array('class' => 'credly_badge_title'));
         $badgeinfo .= html_writer::empty_tag('br');
         $badgeinfo .= $badge->description;
         $badgeinfo .= html_writer::empty_tag('br');

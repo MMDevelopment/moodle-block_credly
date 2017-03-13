@@ -26,6 +26,8 @@ require_once(dirname(__FILE__) . '/../../config.php');
 require_once(dirname(__FILE__).'/locallib.php');
 require_once(dirname(__FILE__).'/lib.php');
 
+require_login();
+
 $returnurl = optional_param('returnurl', '', PARAM_LOCALURL);
 $courseid = optional_param('courseid', 0, PARAM_INT);
 $id = optional_param('id', 0, PARAM_INT);

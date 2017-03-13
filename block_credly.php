@@ -139,8 +139,10 @@ class block_credly extends block_base {
 
         if (count($badges)) {
             $this->content->text .= html_writer::start_div();
-            $this->content->text .= html_writer::link($CFG->wwwroot . '/blocks/credly/mybadges.php?courseid='.$this->page->course->id,
-        get_string('viewallmy', 'block_credly'));
+            $this->content->text .= html_writer::link(
+                $CFG->wwwroot . '/blocks/credly/mybadges.php?courseid='.$this->page->course->id,
+                get_string('viewallmy', 'block_credly')
+            );
             $this->content->text .= html_writer::end_div();
         }
 
