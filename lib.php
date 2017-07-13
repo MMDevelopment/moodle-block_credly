@@ -87,12 +87,12 @@ function block_credly_call_api($url="", $method='GET', $data=array()) {
         case 'DELETE':
             curl_setopt($ci, CURLOPT_CUSTOMREQUEST, 'DELETE');
             if (!empty($data)) {
-                $url = sprintf('%s?%s', $url, http_build_query($data));
+                $url = sprintf('%s?%s', $url, http_build_query($data, '', '&'));
             }
             break;
         default:
             if (!empty($data)) {
-                $url = sprintf('%s?%s', $url, http_build_query($data));
+                $url = sprintf('%s?%s', $url, http_build_query($data, '', '&'));
             }
             break;
     }
