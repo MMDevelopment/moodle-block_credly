@@ -34,4 +34,8 @@ if ($ADMIN->fulltree) {
             get_string('apiuserdesc', 'block_credly'), '', PARAM_RAW_TRIMMED));
     $settings->add(new admin_setting_configtext('block_credly/apipassword', get_string('apipassword', 'block_credly'),
             get_string('apipassworddesc', 'block_credly'), '', PARAM_RAW_TRIMMED));
+    $settings->add(new admin_setting_configtext('block_credly/orgid', get_string('orgid', 'block_credly'),
+            get_string('orgiddesc', 'block_credly'), '', PARAM_RAW_TRIMMED));
+    $settings->add(new admin_setting_configcheckbox('block_credly/usecache', get_string('usecache', 'block_credly'),
+            get_string('usecachedesc', 'block_credly'), 0));
 }

@@ -25,6 +25,20 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * Is the block configured to use caching
+ *
+ * @return boolean whether the block uses caching
+ */
+function block_credly_is_caching() {
+    $usecache = trim(get_config('block_credly', 'usecache'));
+    if ($usecache == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
  * The Credly Open Credit API endpoint URL
  *
  * @return string the endpoint url
@@ -100,7 +114,6 @@ function block_credly_call_api($url="", $method='GET', $data=array()) {
         curl_setopt($ci, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($ci, CURLOPT_USERPWD, $apiuser.":".$apipassword);
     }
-
     curl_setopt($ci, CURLOPT_URL, $url);
     $response = curl_exec($ci);
 
@@ -122,7 +135,13 @@ function block_credly_call_api($url="", $method='GET', $data=array()) {
  */
 function block_credly_get_from_cache($userid=0, $itemtype) {
     global $DB;
-    $rec = $DB->get_record('block_credly_cache', array('userid' => $userid, 'itemtype' => $itemtype));
+    $rec = false;
+    if (block_credly_is_caching()) {
+        $recs = $DB->get_records('block_credly_cache', array('userid' => $userid, 'itemtype' => $itemtype), 'id desc', '*', 0, 1);
+        if (count($recs) > 0) {
+            $rec = reset($recs);
+        }
+    }
     return $rec;
 }
 
@@ -149,6 +168,11 @@ function block_credly_delete_from_cache($userid=0, $itemtype) {
  */
 function block_credly_create_cache_entry($userid=0, $itemtype=null, $value='', $timeexpires=null) {
     global $DB;
+
+    if (!block_credly_is_caching()) {
+        return false;
+    }
+
     if ($timeexpires === null) {
         $timeexpires = time() + (60 * 60 * 24);
     }
@@ -179,10 +203,12 @@ function block_credly_get_token() {
         if ($resultjson !== false) {
             $result = json_decode($resultjson);
             if (isset($result->meta) && $result->meta->status_code == '200' && $result->meta->status == 'OK') {
-                $timeexpires = time() + (60 * 60 * 24 * 7);
+                if (block_credly_is_caching()) {
+                    $timeexpires = time() + (60 * 60 * 24 * 7);
 
-                block_credly_create_cache_entry(0, 'token', $result->data->token, $timeexpires);
-                block_credly_create_cache_entry(0, 'refresh_token', $result->data->refresh_token, $timeexpires);
+                    block_credly_create_cache_entry(0, 'token', $result->data->token, $timeexpires);
+                    block_credly_create_cache_entry(0, 'refresh_token', $result->data->refresh_token, $timeexpires);
+                }
 
                 return $result->data->token;
             }
@@ -219,8 +245,10 @@ function block_credly_get_admin_member_id() {
         $resultjson = block_credly_call_api(block_credly_api_endpoint().'members', 'GET', $data);
         $result = json_decode($resultjson);
         if (isset($result->meta) && $result->meta->status_code == '200' && $result->meta->status == 'OK') {
-            $timeexpires = time() + (60 * 60 * 24 * 90);
-            block_credly_create_cache_entry(0, 'adminmemberid', $result->data[0]->id, $timeexpires);
+            if (block_credly_is_caching()) {
+                $timeexpires = time() + (60 * 60 * 24 * 90);
+                block_credly_create_cache_entry(0, 'adminmemberid', $result->data[0]->id, $timeexpires);
+            }
             return $result->data[0]->id;
         }
     }
@@ -267,8 +295,10 @@ function block_credly_get_member_id($userid=null) {
             $resultjson = block_credly_call_api(block_credly_api_endpoint().'members', 'GET', $data);
             $result = json_decode($resultjson);
             if (isset($result->meta) && $result->meta->status_code == '200' && $result->meta->status == 'OK') {
-                $timeexpires = time() + (60 * 60 * 24 * 30);
-                block_credly_create_cache_entry($userid, 'memberid', $result->data[0]->id, $timeexpires);
+                if (block_credly_is_caching()) {
+                    $timeexpires = time() + (60 * 60 * 24 * 30);
+                    block_credly_create_cache_entry($userid, 'memberid', $result->data[0]->id, $timeexpires);
+                }
                 return $result->data[0]->id;
             }
         }
@@ -311,9 +341,11 @@ function block_credly_get_member_badges($userid=null) {
             $resultjson = block_credly_call_api(block_credly_api_endpoint().'members/'.$memberid.'/badges', 'GET', $data);
             $result = json_decode($resultjson);
             if (isset($result->meta) && $result->meta->status_code == '200' && $result->meta->status == 'OK') {
-                $timeexpires = time() + (60 * 60);
                 $badges = $result->data;
-                block_credly_create_cache_entry($userid, 'memberbadges', json_encode($badges), $timeexpires);
+                if (block_credly_is_caching()) {
+                    $timeexpires = time() + (60 * 60);
+                    block_credly_create_cache_entry($userid, 'memberbadges', json_encode($badges), $timeexpires);
+                }
                 return $badges;
             }
         }
@@ -340,16 +372,23 @@ function block_credly_get_admin_created_badges() {
         $token = block_credly_get_token();
         if ($token !== false) {
             $data = array(
+                'access_token' => $token,
                 'page' => 1,
                 'per_page' => 1000,
                 'order_direction' => 'ASC',
             );
-            $resultjson = block_credly_call_api(block_credly_api_endpoint().'members/'.$memberid.'/badges/created', 'GET', $data);
+            $orgid = trim(get_config('block_credly', 'orgid'));
+            if (!empty($orgid)) {
+                $data['behalf_of'] = $orgid;
+            }
+            $resultjson = block_credly_call_api(block_credly_api_endpoint().'me/badges/created', 'GET', $data);
             $result = json_decode($resultjson);
             if (isset($result->meta) && $result->meta->status_code == '200' && $result->meta->status == 'OK') {
-                $timeexpires = time() + (60 * 60 * 24);
                 $badges = $result->data;
-                block_credly_create_cache_entry(0, 'admincreatedbadges', json_encode($badges), $timeexpires);
+                if (block_credly_is_caching()) {
+                    $timeexpires = time() + (60 * 60 * 24);
+                    block_credly_create_cache_entry(0, 'admincreatedbadges', json_encode($badges), $timeexpires);
+                }
                 return $badges;
             }
         }
@@ -403,6 +442,10 @@ function block_credly_create_badge($formdata, $imagedata) {
             'expires_in' => $formdata->expires_in,
             'access_token' => $token,
         );
+        $orgid = trim(get_config('block_credly', 'orgid'));
+        if (!empty($orgid)) {
+            $data['behalf_of'] = $orgid;
+        }
         $resultjson = block_credly_call_api(block_credly_api_endpoint().'badges', 'POST', $data);
         $result = json_decode($resultjson);
         if (isset($result->meta) && $result->meta->status_code == '200' && $result->meta->status == 'OK') {
