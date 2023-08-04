@@ -1,6 +1,10 @@
 MOODLE CREDLY BLOCK
 ==========
 
+CURRENT STATUS
+----------
+Development on this plugin has already been discontinued.
+A more recent integration exists on the Credly site.
 
 INTRODUCTION
 ----------
